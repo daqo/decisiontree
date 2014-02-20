@@ -1,0 +1,27 @@
+T: oracle 2 buy wontbuy
+4
+A: age 4 <18 18-35 36-55 >55
+A: education 3 highschool bachelors masters
+A: income 2 low high
+A: maritalstatus 2 single married
+20
+D: 36-55 masters  high  single buy
+D: 18-35 highschool low single wontbuy
+D: 36-55 masters  low single buy
+D: 18-35 bachelors  high  single wontbuy
+D: <18  highschool low single buy
+D: 18-35 bachelors  high  married wontbuy
+D: 36-55 bachelors  low married wontbuy
+D: >55  bachelors  high  single buy
+D: 36-55 masters  low married wontbuy
+D: D  masters  low married buy
+D: 36-55 masters  high  single buy
+D: >55  masters  high  single buy
+D: <18  highschool high  single wontbuy
+D: 36-55 masters  low single buy
+D: 36-55 highschool low single buy
+D: <18  highschool low married buy
+D: 18-35 bachelors  high  married wontbuy
+D: >55  highschool high  married buy
+D: >55  bachelors  low single buy
+D: 36-55 highschool high  married wontbuy

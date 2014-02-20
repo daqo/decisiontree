@@ -1,0 +1,17 @@
+T: mode 3 bus car train
+4
+A: gender 2 male female
+A: carownership 3 0 1 2
+A: travelcost 3 cheap expensive standard
+A: incomelevel 3 low medium high
+10
+D: male 0 cheap low bus
+D: male 1 cheap medium bus
+D: female 0 cheap low bus
+D: male 1 cheap medium bus
+D: female 1 expensive high car
+D: male 2 expensive medium car
+D: female 2 expensive high car
+D: female 1 cheap medium train
+D: male 0 expensive medium train
+D: female 1 expensive medium train

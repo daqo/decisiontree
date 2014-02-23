@@ -10,13 +10,11 @@ module ImpurityMeasurer
       oracles[value.downcase.to_sym] = data.select { |r| r.oracle.eql?(value) }
     end
 
-    set_of_p = []
-    oracles.each do |(key, records)|
+    set_of_p = oracles.inject([]) do |set, (key, records)|
       p = records.size.to_f / data.size
-      set_of_p << (p.nan? ? 0 : p)
+      set << (p.nan? ? 0 : p)
     end
 
-    
     return 1 - set_of_p.max
   end
 

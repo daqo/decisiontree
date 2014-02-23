@@ -1,4 +1,3 @@
-require 'debugger'
 module ImpurityMeasurer
   ENTROPY = 0
   GINI = 1

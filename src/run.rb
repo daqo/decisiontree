@@ -4,7 +4,7 @@ require 'file_utility'
 require 'machine_learner'
 require 'impurity_measurer'
 
-possible_oracles, attributes, test_data = FileUtility.read("../DataSets/contact_lenses.data")
+possible_oracles, attributes, test_data = FileUtility.read("../DataSets/contact-lenses.data")
 
 learner = MachineLearner.new(test_data, attributes, possible_oracles, ImpurityMeasurer::GINI)
 #learner = MachineLearner.new(test_data, attributes, possible_oracles, ImpurityMeasurer::CLASSIFICATION_ERROR)

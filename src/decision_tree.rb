@@ -1,65 +1,61 @@
+require 'impurity_measurer'
+
 module DecisionTree
   class ID3Tree
-    attr_accessor :possible_oracles
+    attr_accessor :possible_oracles, :splitting_function
 
-    def initialize(oracle_set)
+    def initialize(oracle_set, splitting_function)
       self.possible_oracles = oracle_set
+      self.splitting_function = splitting_function
     end
 
     def key_with_max_value?(hash)
       hash.max_by{|k,v| v}[0]
     end
 
-    def calculate_entropy(data)
-      oracles = {}
-
-      @possible_oracles.each do |value|
-        oracles[value.downcase.to_sym] = data.select { |r| r.oracle.eql?(value) }
+    def calculate_impurity(data)
+      case self.splitting_function
+      when ImpurityMeasurer::ENTROPY
+        ImpurityMeasurer.calculate_entropy(data, @possible_oracles)
+      when ImpurityMeasurer::GINI
+        ImpurityMeasurer.calculate_gini(data, @possible_oracles)
       end
-
-      entropy = oracles.reduce(0) do |entropy, (key, records)|
-        p = records.size.to_f / data.size
-        amount = (p == 0) ? 0 : p * Math.log(p,2)
-        entropy - amount
-      end
-
-      entropy.nan? ? 0 : entropy
     end
 
-    def gain(data, label, attributes, entropy, entropy_S)
+    def gain(data, label, attributes, impurity, impurity_S)
       possible_values = attributes[label]
 
-      gain = possible_values.reduce(entropy_S) do |gain, value|
+      gain = possible_values.reduce(impurity_S) do |gain, value|
         count = (data.select { |r| r.send(label) == value }).size.to_f
-        gain - count / data.size * entropy[label][value.downcase.to_sym]
+        gain - count / data.size * impurity[label][value.downcase.to_sym]
       end
     end
 
-    def calculate_entropy_for_all_labels(data, attributes)
-      entropy = {}
+    def calculate_impurity_for_all_labels(data, attributes)
+      impurity = {}
       attributes.keys.each do |label|
-        entropy[label] = {}
+        impurity[label] = {}
         attributes[label].each do |v|
-          entropy[label][v.downcase.to_sym] =
-            calculate_entropy( data.select { |r| r.send(label).eql?(v) })
+          impurity[label][v.downcase.to_sym] =
+            calculate_impurity( data.select { |r| r.send(label).eql?(v) })
         end
       end
-      return entropy
+      return impurity
     end
 
-    def total_gain_for_all_labels(data, attributes, entropy, entropy_S)
+    def total_gain_for_all_labels(data, attributes, impurity, impurity_S)
       total_gain = {}
       attributes.keys.each do |label|
-        total_gain[label] = gain(data, label, attributes, entropy, entropy_S)
+        total_gain[label] = gain(data, label, attributes, impurity, impurity_S)
       end
 
       return total_gain
     end
 
     def find_root(data, attributes)
-      entropy_S = calculate_entropy(data)
-      entropy = calculate_entropy_for_all_labels(data, attributes)
-      total_gain = total_gain_for_all_labels(data, attributes, entropy, entropy_S)
+      impurity_S = calculate_impurity(data)
+      impurity = calculate_impurity_for_all_labels(data, attributes)
+      total_gain = total_gain_for_all_labels(data, attributes, impurity, impurity_S)
       max_label = key_with_max_value?(total_gain)
 
       max_label

@@ -5,8 +5,8 @@ require 'yaml'
 class MachineLearner
   attr_accessor :root
 
-  def initialize(data, attributes, possible_oracles)
-    tree = DecisionTree::ID3Tree.new(possible_oracles)
+  def initialize(data, attributes, possible_oracles, splitting_function)
+    tree = DecisionTree::ID3Tree.new(possible_oracles, splitting_function)
     @root = tree.train(data, attributes)
   end
 

@@ -1,4 +1,4 @@
-module ImpurityMeasurer
+module Impurity
   ENTROPY = 0
   GINI = 1
   CLASSIFICATION_ERROR =2

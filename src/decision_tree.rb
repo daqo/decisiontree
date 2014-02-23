@@ -1,5 +1,5 @@
-require 'impurity_measurer'
-
+require 'impurity'
+require 'debugger'
 module DecisionTree
   class ID3Tree
     attr_accessor :possible_oracles, :splitting_function
@@ -15,12 +15,12 @@ module DecisionTree
 
     def calculate_impurity(data)
       case self.splitting_function
-      when ImpurityMeasurer::ENTROPY
-        ImpurityMeasurer.calculate_entropy(data, @possible_oracles)
-      when ImpurityMeasurer::GINI
-        ImpurityMeasurer.calculate_gini(data, @possible_oracles)
-      when ImpurityMeasurer::CLASSIFICATION_ERROR
-        ImpurityMeasurer.calculate_classification_error(data, @possible_oracles)
+      when Impurity::ENTROPY
+        Impurity.calculate_entropy(data, @possible_oracles)
+      when Impurity::GINI
+        Impurity.calculate_gini(data, @possible_oracles)
+      when Impurity::CLASSIFICATION_ERROR
+        Impurity.calculate_classification_error(data, @possible_oracles)
       end
     end
 

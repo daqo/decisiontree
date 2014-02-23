@@ -2,11 +2,11 @@ $LOAD_PATH << '.'
 
 require 'file_utility'
 require 'machine_learner'
-require 'impurity_measurer'
+require 'impurity'
 
-possible_oracles, attributes, test_data = FileUtility.read("../DataSets/contact-lenses.data")
+possible_oracles, attributes, test_data = FileUtility.read("../DataSets/windsurf.data")
 
-learner = MachineLearner.new(test_data, attributes, possible_oracles, ImpurityMeasurer::GINI)
+learner = MachineLearner.new(test_data, attributes, possible_oracles, Impurity::GINI)
 #learner = MachineLearner.new(test_data, attributes, possible_oracles, ImpurityMeasurer::CLASSIFICATION_ERROR)
 #learner = MachineLearner.new(test_data, attributes, possible_oracles, ImpurityMeasurer::ENTROPY)
 learner.show_tree

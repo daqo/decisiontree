@@ -19,6 +19,8 @@ module DecisionTree
         ImpurityMeasurer.calculate_entropy(data, @possible_oracles)
       when ImpurityMeasurer::GINI
         ImpurityMeasurer.calculate_gini(data, @possible_oracles)
+      when ImpurityMeasurer::CLASSIFICATION_ERROR
+        ImpurityMeasurer.calculate_classification_error(data, @possible_oracles)
       end
     end
 
